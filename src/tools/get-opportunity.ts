@@ -2,13 +2,13 @@ import { SiebelClient } from "../siebel-client.js";
 
 export const getOpportunityTool = {
   name: "get_opportunity",
-  description: "Obtiene una oportunidad de Siebel CRM por su ID",
+  description: "Retrieves a Siebel CRM opportunity by ID",
   inputSchema: {
     type: "object",
     properties: {
-      id:         { type: "string", description: "ID de la oportunidad (ROW_ID)" },
-      searchspec: { type: "string", description: "Búsqueda alternativa por expresión Siebel" },
-      fields:     { type: "array", items: { type: "string" }, description: "Campos a retornar" },
+      id:         { type: "string", description: "Opportunity ID (ROW_ID)" },
+      searchspec: { type: "string", description: "Alternative Siebel search expression" },
+      fields:     { type: "array", items: { type: "string" }, description: "Fields to return" },
     },
   },
 };

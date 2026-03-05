@@ -2,13 +2,13 @@ import { SiebelClient } from "../siebel-client.js";
 
 export const searchAccountsTool = {
   name: "search_accounts",
-  description: "Busca cuentas en Siebel CRM por nombre u otro criterio",
+  description: "Searches accounts in Siebel CRM by name or other criteria",
   inputSchema: {
     type: "object",
     properties: {
-      name:       { type: "string", description: "Nombre de la cuenta (búsqueda parcial)" },
-      searchspec: { type: "string", description: "Expresión de búsqueda Siebel custom (ej: [Status]='Active')" },
-      fields:     { type: "array", items: { type: "string" }, description: "Campos a retornar" },
+      name:       { type: "string", description: "Account name (partial match)" },
+      searchspec: { type: "string", description: "Custom Siebel search expression (e.g. [Status]='Active')" },
+      fields:     { type: "array", items: { type: "string" }, description: "Fields to return" },
     },
   },
 };

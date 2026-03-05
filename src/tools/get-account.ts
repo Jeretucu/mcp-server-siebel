@@ -2,11 +2,11 @@ import { SiebelClient } from "../siebel-client.js";
 
 export const getAccountTool = {
   name: "get_account",
-  description: "Obtiene una cuenta de Siebel CRM por su ID",
+  description: "Retrieves a Siebel CRM account by ID",
   inputSchema: {
     type: "object",
     properties: {
-      id: { type: "string", description: "ID de la cuenta (ROW_ID)" },
+      id: { type: "string", description: "Account ID (ROW_ID)" },
     },
     required: ["id"],
   },

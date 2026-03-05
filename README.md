@@ -4,25 +4,25 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-blue.svg)](https://modelcontextprotocol.io)
 
-Servidor MCP (Model Context Protocol) para integración con **Oracle Siebel CRM** vía su API REST. Permite que Claude y otros modelos de IA interactúen directamente con Siebel.
+MCP (Model Context Protocol) server for **Oracle Siebel CRM** integration via its REST API. Allows Claude and other AI models to interact directly with Siebel.
 
 ---
 
-## Requisitos previos
+## Prerequisites
 
 - Node.js >= 18
-- Acceso a una instancia de Siebel CRM con la API REST habilitada
-- Usuario y contraseña de Siebel
+- Access to a Siebel CRM instance with the REST API enabled
+- Siebel username and password
 
 ---
 
-## Instalación
+## Installation
 
 ```bash
 npm install -g @jeretucu/mcp-server-siebel
 ```
 
-O usar directamente con npx:
+Or use directly with npx:
 
 ```bash
 npx @jeretucu/mcp-server-siebel
@@ -30,29 +30,29 @@ npx @jeretucu/mcp-server-siebel
 
 ---
 
-## Configuración de variables de entorno
+## Environment variables
 
-Crea un archivo `.env` basado en `.env.example`:
+Create a `.env` file based on `.env.example`:
 
 ```env
-SIEBEL_URL=https://tu-servidor-siebel:9001
-SIEBEL_USERNAME=tu_usuario
-SIEBEL_PASSWORD=tu_contrasena
+SIEBEL_URL=https://your-siebel-server:9001
+SIEBEL_USERNAME=your_username
+SIEBEL_PASSWORD=your_password
 SIEBEL_LANG=ENU
 ```
 
-| Variable | Descripción | Requerida |
+| Variable | Description | Required |
 |---|---|---|
-| `SIEBEL_URL` | URL base del servidor Siebel | Sí |
-| `SIEBEL_USERNAME` | Usuario de Siebel | Sí |
-| `SIEBEL_PASSWORD` | Contraseña de Siebel | Sí |
-| `SIEBEL_LANG` | Idioma (default: ENU) | No |
+| `SIEBEL_URL` | Siebel server base URL | Yes |
+| `SIEBEL_USERNAME` | Siebel username | Yes |
+| `SIEBEL_PASSWORD` | Siebel password | Yes |
+| `SIEBEL_LANG` | Language (default: ENU) | No |
 
 ---
 
-## Conectar a Claude Desktop
+## Connect to Claude Desktop
 
-Agrega esto a tu archivo `claude_desktop_config.json`:
+Add this to your `claude_desktop_config.json`:
 
 **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
 **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
@@ -64,9 +64,9 @@ Agrega esto a tu archivo `claude_desktop_config.json`:
       "command": "npx",
       "args": ["-y", "@jeretucu/mcp-server-siebel"],
       "env": {
-        "SIEBEL_URL": "https://tu-servidor-siebel:9001",
-        "SIEBEL_USERNAME": "tu_usuario",
-        "SIEBEL_PASSWORD": "tu_contrasena",
+        "SIEBEL_URL": "https://your-siebel-server:9001",
+        "SIEBEL_USERNAME": "your_username",
+        "SIEBEL_PASSWORD": "your_password",
         "SIEBEL_LANG": "ENU"
       }
     }
@@ -76,92 +76,92 @@ Agrega esto a tu archivo `claude_desktop_config.json`:
 
 ---
 
-## Conectar a Claude Code
+## Connect to Claude Code
 
 ```bash
 claude mcp add siebel npx @jeretucu/mcp-server-siebel \
-  -e SIEBEL_URL=https://tu-servidor:9001 \
-  -e SIEBEL_USERNAME=usuario \
-  -e SIEBEL_PASSWORD=contrasena
+  -e SIEBEL_URL=https://your-server:9001 \
+  -e SIEBEL_USERNAME=username \
+  -e SIEBEL_PASSWORD=password
 ```
 
 ---
 
-## Tools disponibles
+## Available tools
 
 ### `get_account`
-Obtiene una cuenta por ID.
+Retrieves an account by ID.
 ```
-Obtén la cuenta con ID 1-ABC123
+Get the account with ID 1-ABC123
 ```
 
 ### `search_accounts`
-Busca cuentas por nombre u otro criterio.
+Searches accounts by name or other criteria.
 ```
-Busca cuentas con nombre que contenga "Transbank"
+Search for accounts with name containing "Transbank"
 ```
 
 ### `get_contact`
-Obtiene un contacto por ID.
+Retrieves a contact by ID.
 ```
-Obtén el contacto 1-XYZ456
+Get contact 1-XYZ456
 ```
 
 ### `search_contacts`
-Busca contactos por nombre, apellido o email.
+Searches contacts by first name, last name or email.
 ```
-Busca contactos con apellido "González"
+Search for contacts with last name "González"
 ```
 
 ### `get_opportunity`
-Obtiene una oportunidad por ID o criterio de búsqueda.
+Retrieves an opportunity by ID or search criteria.
 ```
-Busca oportunidades con estado "Open"
+Search for opportunities with status "Open"
 ```
 
 ### `create_activity`
-Crea una actividad o tarea en Siebel.
+Creates an activity or task in Siebel.
 ```
-Crea una actividad de tipo "Call" para la cuenta 1-ABC123
+Create a "Call" activity for account 1-ABC123
 ```
 
 ### `update_record`
-Actualiza cualquier registro de Siebel.
+Updates any Siebel record.
 ```
-Actualiza el campo Status a "Active" en la cuenta 1-ABC123
+Update the Status field to "Active" on account 1-ABC123
 ```
 
 ### `run_query`
-Ejecuta una query sobre cualquier Business Object.
+Runs a query on any Business Object.
 ```
-Consulta el Business Object Quote con searchspec [Status]='Open'
+Query the Quote Business Object with searchspec [Status]='Open'
 ```
 
 ---
 
-## Desarrollo local
+## Local development
 
 ```bash
 git clone https://github.com/jeretucu/mcp-server-siebel
 cd mcp-server-siebel
 npm install
 cp .env.example .env
-# editar .env con tus credenciales
+# edit .env with your credentials
 npm run dev
 ```
 
 ---
 
-## Contribución
+## Contributing
 
-1. Fork del repositorio
-2. Crea una rama: `git checkout -b feature/nueva-tool`
-3. Commit: `git commit -m "feat: agrega nueva tool"`
-4. Push: `git push origin feature/nueva-tool`
-5. Abre un Pull Request
+1. Fork the repository
+2. Create a branch: `git checkout -b feature/new-tool`
+3. Commit: `git commit -m "feat: add new tool"`
+4. Push: `git push origin feature/new-tool`
+5. Open a Pull Request
 
 ---
 
-## Licencia
+## License
 
 MIT © [jeretucu](https://github.com/jeretucu)

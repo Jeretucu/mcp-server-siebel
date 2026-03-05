@@ -2,15 +2,15 @@ import { SiebelClient } from "../siebel-client.js";
 
 export const searchContactsTool = {
   name: "search_contacts",
-  description: "Busca contactos en Siebel CRM",
+  description: "Searches contacts in Siebel CRM",
   inputSchema: {
     type: "object",
     properties: {
-      first_name: { type: "string", description: "Nombre del contacto" },
-      last_name:  { type: "string", description: "Apellido del contacto" },
-      email:      { type: "string", description: "Email del contacto" },
-      searchspec: { type: "string", description: "Expresión de búsqueda Siebel custom" },
-      fields:     { type: "array", items: { type: "string" }, description: "Campos a retornar" },
+      first_name: { type: "string", description: "Contact first name" },
+      last_name:  { type: "string", description: "Contact last name" },
+      email:      { type: "string", description: "Contact email" },
+      searchspec: { type: "string", description: "Custom Siebel search expression" },
+      fields:     { type: "array", items: { type: "string" }, description: "Fields to return" },
     },
   },
 };

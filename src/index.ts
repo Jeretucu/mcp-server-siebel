@@ -53,7 +53,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       case "update_record":     result = await updateRecord(client, args as any); break;
       case "run_query":         result = await runQuery(client, args as any); break;
       default:
-        return { content: [{ type: "text", text: `Tool desconocida: ${name}` }], isError: true };
+        return { content: [{ type: "text", text: `Unknown tool: ${name}` }], isError: true };
     }
 
     return {
@@ -70,7 +70,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("MCP Server Siebel corriendo...");
+  console.error("MCP Server Siebel running...");
 }
 
 main().catch((err) => {

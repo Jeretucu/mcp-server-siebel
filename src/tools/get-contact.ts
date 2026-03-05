@@ -2,11 +2,11 @@ import { SiebelClient } from "../siebel-client.js";
 
 export const getContactTool = {
   name: "get_contact",
-  description: "Obtiene un contacto de Siebel CRM por su ID",
+  description: "Retrieves a Siebel CRM contact by ID",
   inputSchema: {
     type: "object",
     properties: {
-      id: { type: "string", description: "ID del contacto (ROW_ID)" },
+      id: { type: "string", description: "Contact ID (ROW_ID)" },
     },
     required: ["id"],
   },

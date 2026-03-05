@@ -2,17 +2,17 @@ import { SiebelClient } from "../siebel-client.js";
 
 export const createActivityTool = {
   name: "create_activity",
-  description: "Crea una actividad o tarea en Siebel CRM",
+  description: "Creates an activity or task in Siebel CRM",
   inputSchema: {
     type: "object",
     properties: {
-      description: { type: "string", description: "Descripción de la actividad" },
-      type:        { type: "string", description: "Tipo de actividad (ej: Call, Email, Meeting)" },
-      status:      { type: "string", description: "Estado (ej: In Progress, Done, Not Started)" },
-      due_date:    { type: "string", description: "Fecha límite (MM/DD/YYYY)" },
-      account_id:  { type: "string", description: "ID de la cuenta asociada" },
-      contact_id:  { type: "string", description: "ID del contacto asociado" },
-      comment:     { type: "string", description: "Comentario o descripción adicional" },
+      description: { type: "string", description: "Activity description" },
+      type:        { type: "string", description: "Activity type (e.g. Call, Email, Meeting)" },
+      status:      { type: "string", description: "Status (e.g. In Progress, Done, Not Started)" },
+      due_date:    { type: "string", description: "Due date (MM/DD/YYYY)" },
+      account_id:  { type: "string", description: "Associated account ID" },
+      contact_id:  { type: "string", description: "Associated contact ID" },
+      comment:     { type: "string", description: "Additional comment" },
     },
     required: ["description"],
   },

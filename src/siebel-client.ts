@@ -60,7 +60,7 @@ export function createClient(): SiebelClient {
 
   if (!url || !username || !password) {
     throw new Error(
-      "Faltan variables de entorno: SIEBEL_URL, SIEBEL_USERNAME, SIEBEL_PASSWORD"
+      "Missing environment variables: SIEBEL_URL, SIEBEL_USERNAME, SIEBEL_PASSWORD"
     );
   }
 

@@ -2,14 +2,14 @@ import { SiebelClient } from "../siebel-client.js";
 
 export const updateRecordTool = {
   name: "update_record",
-  description: "Actualiza cualquier registro en Siebel CRM",
+  description: "Updates any record in Siebel CRM",
   inputSchema: {
     type: "object",
     properties: {
-      business_object:    { type: "string", description: "Business Object (ej: Account, Contact, Opportunity)" },
-      business_component: { type: "string", description: "Business Component (generalmente igual al BO)" },
-      id:                 { type: "string", description: "ID del registro a actualizar" },
-      fields:             { type: "object", description: "Campos y valores a actualizar", additionalProperties: true },
+      business_object:    { type: "string", description: "Business Object (e.g. Account, Contact, Opportunity)" },
+      business_component: { type: "string", description: "Business Component (usually same as BO)" },
+      id:                 { type: "string", description: "Record ID to update" },
+      fields:             { type: "object", description: "Fields and values to update", additionalProperties: true },
     },
     required: ["business_object", "business_component", "id", "fields"],
   },
