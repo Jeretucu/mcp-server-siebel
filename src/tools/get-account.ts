@@ -2,7 +2,7 @@ import { SiebelClient } from "../siebel-client.js";
 
 export const getAccountTool = {
   name: "get_account",
-  description: "Retrieves a Siebel CRM account by ID",
+  description: "Retrieves a Siebel CRM account by its internal ROW_ID. To search by RUT or Razón Social, use search_accounts instead.",
   inputSchema: {
     type: "object",
     properties: {

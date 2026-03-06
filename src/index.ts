@@ -15,6 +15,7 @@ import { getOpportunityTool, getOpportunity } from "./tools/get-opportunity.js";
 import { createActivityTool, createActivity } from "./tools/create-activity.js";
 import { updateRecordTool, updateRecord } from "./tools/update-record.js";
 import { runQueryTool, runQuery } from "./tools/run-query.js";
+import { createOfertaTool, createOferta } from "./tools/create-oferta.js";
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ const tools = [
   createActivityTool,
   updateRecordTool,
   runQueryTool,
+  createOfertaTool,
 ];
 
 server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools }));
@@ -52,6 +54,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       case "create_activity":   result = await createActivity(client, args as any); break;
       case "update_record":     result = await updateRecord(client, args as any); break;
       case "run_query":         result = await runQuery(client, args as any); break;
+      case "create_oferta":    result = await createOferta(args as any); break;
       default:
         return { content: [{ type: "text", text: `Unknown tool: ${name}` }], isError: true };
     }
