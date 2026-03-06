@@ -16,11 +16,12 @@ import { createActivityTool, createActivity } from "./tools/create-activity.js";
 import { updateRecordTool, updateRecord } from "./tools/update-record.js";
 import { runQueryTool, runQuery } from "./tools/run-query.js";
 import { createOfertaTool, createOferta } from "./tools/create-oferta.js";
+import { createAccountTool, createAccount } from "./tools/create-account.js";
 
 dotenv.config();
 
 const server = new Server(
-  { name: "mcp-server-siebel", version: "1.0.0" },
+  { name: "mcp-server-siebel", version: "1.1.0" },
   { capabilities: { tools: {} } }
 );
 
@@ -34,6 +35,7 @@ const tools = [
   updateRecordTool,
   runQueryTool,
   createOfertaTool,
+  createAccountTool,
 ];
 
 server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools }));
@@ -46,17 +48,21 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     let result: unknown;
 
     switch (name) {
-      case "get_account":       result = await getAccount(client, args as any); break;
-      case "search_accounts":   result = await searchAccounts(client, args as any); break;
-      case "get_contact":       result = await getContact(client, args as any); break;
-      case "search_contacts":   result = await searchContacts(client, args as any); break;
-      case "get_opportunity":   result = await getOpportunity(client, args as any); break;
-      case "create_activity":   result = await createActivity(client, args as any); break;
-      case "update_record":     result = await updateRecord(client, args as any); break;
-      case "run_query":         result = await runQuery(client, args as any); break;
-      case "create_oferta":    result = await createOferta(args as any); break;
+      case "get_account":     result = await getAccount(client, args as any); break;
+      case "search_accounts": result = await searchAccounts(client, args as any); break;
+      case "get_contact":     result = await getContact(client, args as any); break;
+      case "search_contacts": result = await searchContacts(client, args as any); break;
+      case "get_opportunity": result = await getOpportunity(client, args as any); break;
+      case "create_activity": result = await createActivity(client, args as any); break;
+      case "update_record":   result = await updateRecord(client, args as any); break;
+      case "run_query":       result = await runQuery(client, args as any); break;
+      case "create_oferta":   result = await createOferta(args as any); break;
+      case "create_account":  result = await createAccount(args as any); break;
       default:
-        return { content: [{ type: "text", text: `Unknown tool: ${name}` }], isError: true };
+        return {
+          content: [{ type: "text", text: `Unknown tool: ${name}` }],
+          isError: true,
+        };
     }
 
     return {
