@@ -1,4 +1,5 @@
 import { SiebelClient } from "../siebel-client.js";
+import { escapeSiebelValue } from "../utils/sanitize.js";
 
 export const searchContactsTool = {
   name: "search_contacts",
@@ -22,9 +23,9 @@ export async function searchContacts(
   let spec = args.searchspec;
   if (!spec) {
     const parts: string[] = [];
-    if (args.first_name) parts.push(`[First Name] LIKE '*${args.first_name}*'`);
-    if (args.last_name)  parts.push(`[Last Name] LIKE '*${args.last_name}*'`);
-    if (args.email)      parts.push(`[Email Address] = '${args.email}'`);
+    if (args.first_name) parts.push(`[First Name] LIKE '*${escapeSiebelValue(args.first_name)}*'`);
+    if (args.last_name)  parts.push(`[Last Name] LIKE '*${escapeSiebelValue(args.last_name)}*'`);
+    if (args.email)      parts.push(`[Email Address] = '${escapeSiebelValue(args.email)}'`);
     if (parts.length)    spec = parts.join(" AND ");
   }
   return client.query("Contact", "Contact", spec, args.fields);

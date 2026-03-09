@@ -2,9 +2,10 @@ import puppeteer from "puppeteer";
 import * as fs from "fs";
 import * as path from "path";
 import * as os from "os";
+import { sanitizeFileName, validateOutputDir } from "../utils/sanitize.js";
 
-export const generateEvidenciaTool = {
-  name: "generate_evidencia",
+export const templateQATool = {
+  name: "template_qa",
   description: "Generates a PDF evidence document for a Siebel Oferta Económica. Takes screenshots of the offer form and Atributos tab and generates a formatted PDF.",
   inputSchema: {
     type: "object",
@@ -52,17 +53,17 @@ function buildPdfHtml(nroOferta: string, proyecto: string, autor: string, fecha:
 </style>
 </head>
 <body>
-<div class="page-footer">ACTIVEIT – ${proyecto} – DOCUMENTACIÓN CONFIDENCIAL</div>
+<div class="page-footer">${proyecto} – DOCUMENTACIÓN CONFIDENCIAL</div>
 <div class="cover">
-  <div class="logo-text">active<span>IT</span></div>
-  <h1>Continuidad Transbank</h1>
+  <div class="logo-text">Siebel<span>CRM</span></div>
+  <h1>Evidencias de Pruebas</h1>
   <h2>Evidencias de Pruebas Internas</h2>
   <div class="ticket">${proyecto}: Creación de Oferta Económica</div>
   <div class="meta">${fecha}<br>${autor}</div>
 </div>
 <div class="page-header">
-  <div class="brand">active<span>IT</span></div>
-  <div class="confidencial">ACTIVEIT – ${proyecto} – DOCUMENTACIÓN CONFIDENCIAL</div>
+  <div class="brand">Siebel<span>CRM</span></div>
+  <div class="confidencial">${proyecto} – DOCUMENTACIÓN CONFIDENCIAL</div>
 </div>
 <h2 class="section">1. Control de documento</h2>
 <table>
@@ -81,8 +82,8 @@ function buildPdfHtml(nroOferta: string, proyecto: string, autor: string, fecha:
 </table>
 <div class="screenshot-section">
 <div class="page-header">
-  <div class="brand">active<span>IT</span></div>
-  <div class="confidencial">ACTIVEIT – ${proyecto} – DOCUMENTACIÓN CONFIDENCIAL</div>
+  <div class="brand">Siebel<span>CRM</span></div>
+  <div class="confidencial">${proyecto} – DOCUMENTACIÓN CONFIDENCIAL</div>
 </div>
 <h2 class="section">3. Evidencias en Siebel</h2>
 <h3 class="subsection">3.1. Formulario Principal de la Oferta</h3>
@@ -91,8 +92,8 @@ function buildPdfHtml(nroOferta: string, proyecto: string, autor: string, fecha:
 </div>
 <div class="page-break">
 <div class="page-header">
-  <div class="brand">active<span>IT</span></div>
-  <div class="confidencial">ACTIVEIT – ${proyecto} – DOCUMENTACIÓN CONFIDENCIAL</div>
+  <div class="brand">Siebel<span>CRM</span></div>
+  <div class="confidencial">${proyecto} – DOCUMENTACIÓN CONFIDENCIAL</div>
 </div>
 <h3 class="subsection">3.2. Tab Atributos del Producto</h3>
 <p class="screenshot-label">Se verifica que los atributos del producto quedaron correctamente configurados.</p>
@@ -102,7 +103,7 @@ function buildPdfHtml(nroOferta: string, proyecto: string, autor: string, fecha:
 </html>`;
 }
 
-export async function generateEvidencia(args: {
+export async function templateQA(args: {
   nro_oferta: string;
   proyecto: string;
   autor: string;
@@ -182,9 +183,10 @@ export async function generateEvidencia(args: {
     });
 
     // Guardar PDF
-    const outputDir = args.output_dir || path.join(os.homedir(), "Desktop");
-    const filename = `EVIDENCIA-${args.proyecto}-${args.nro_oferta}.pdf`;
-    const filePath = path.join(outputDir, filename);
+    const rawOutputDir = args.output_dir || path.join(os.homedir(), "Desktop");
+    const outputDir    = validateOutputDir(rawOutputDir);
+    const filename     = sanitizeFileName(`TEMPLATEQA-${args.proyecto}-${args.nro_oferta}.pdf`);
+    const filePath     = path.join(outputDir, filename);
     fs.writeFileSync(filePath, pdfBuffer);
 
     return {

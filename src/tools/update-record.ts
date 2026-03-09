@@ -1,4 +1,5 @@
 import { SiebelClient } from "../siebel-client.js";
+import { validateUrlSegment } from "../utils/sanitize.js";
 
 export const updateRecordTool = {
   name: "update_record",
@@ -24,6 +25,9 @@ export async function updateRecord(
     fields: Record<string, unknown>;
   }
 ) {
+  validateUrlSegment(args.business_object, "business_object");
+  validateUrlSegment(args.business_component, "business_component");
+
   return client.put(
     `/data/${args.business_object}/${args.business_component}/${args.id}`,
     args.fields

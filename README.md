@@ -98,7 +98,7 @@ Get the account with ID 1-ABC123
 ### `search_accounts`
 Searches accounts by name or other criteria.
 ```
-Search for accounts with name containing "Transbank"
+Search for accounts with name containing "Acme Corp"
 ```
 
 ### `get_contact`

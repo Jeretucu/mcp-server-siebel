@@ -1,4 +1,5 @@
 import { SiebelClient } from "../siebel-client.js";
+import { validateUrlSegment } from "../utils/sanitize.js";
 
 export const runQueryTool = {
   name: "run_query",
@@ -24,6 +25,9 @@ export async function runQuery(
     fields?: string[];
   }
 ) {
+  validateUrlSegment(args.business_object, "business_object");
+  validateUrlSegment(args.business_component, "business_component");
+
   return client.query(
     args.business_object,
     args.business_component,

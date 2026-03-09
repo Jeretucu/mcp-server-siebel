@@ -1,4 +1,5 @@
 import { SiebelClient } from "../siebel-client.js";
+import { escapeSiebelValue } from "../utils/sanitize.js";
 
 export const searchAccountsTool = {
   name: "search_accounts",
@@ -19,10 +20,11 @@ export async function searchAccounts(
 ) {
   let spec = args.searchspec;
   if (!spec && args.name) {
-    const isRut = /^\d+$/.test(args.name.trim());
+    const safe    = escapeSiebelValue(args.name.trim());
+    const isRut   = /^\d+$/.test(args.name.trim());
     spec = isRut
-      ? `[Name]='${args.name.trim()}'`
-      : `[Alias] LIKE '*${args.name.toUpperCase()}*'`;
+      ? `[Name]='${safe}'`
+      : `[Alias] LIKE '*${safe.toUpperCase()}*'`;
   }
   return client.query("Account", "Account", spec, args.fields);
 }

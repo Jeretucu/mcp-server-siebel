@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SiebelMessage MessageId="1-WF-ACCOUNT-QBN" MessageType="Integration"
+              IntObjectName="Workflow Process"
+              IntObjectFormat="Siebel Hierarchical"
+              operation="upsert">
+
+  <ListOfWorkflow-Process>
+    <Workflow-Process>
+      <Name>WF_Account_Query_By_Name</Name>
+      <BusObj>Account</BusObj>
+      <Status>In Progress</Status>
+      <ProcessType>Workflow Process</ProcessType>
+      <Version>0</Version>
+      <Desc>Consulta cuentas por nombre y retorna la cantidad de registros encontrados</Desc>
+
+      <!-- ══════════════════════════════
+           PROCESS PROPERTIES
+           ══════════════════════════════ -->
+      <ListOfWFProcessProp>
+
+        <WFProcessProp>
+          <Name>Input_Account_Name</Name>
+          <DataType>String</DataType>
+          <Type>Input Argument</Type>
+          <Seq>0</Seq>
+          <Comments>Nombre de cuenta ingresado por el usuario</Comments>
+        </WFProcessProp>
+
+        <WFProcessProp>
+          <Name>Output_Record_Count</Name>
+          <DataType>String</DataType>
+          <Type>Output Argument</Type>
+          <Seq>1</Seq>
+          <Comments>Cantidad de registros encontrados</Comments>
+        </WFProcessProp>
+
+      </ListOfWFProcessProp>
+
+      <!-- ══════════════════════════════
+           STEPS
+           ══════════════════════════════ -->
+      <ListOfWFStep>
+
+        <!-- ──────────────────────────
+             STEP 1: Start
+             ────────────────────────── -->
+        <WFStep>
+          <Name>Start</Name>
+          <Type>Start</Type>
+          <Seq>0</Seq>
+
+          <ListOfWFStepBranch>
+            <WFStepBranch>
+              <Name>Start to Query Account by Name</Name>
+              <NextStepName>Query Account by Name</NextStepName>
+              <Seq>0</Seq>
+            </WFStepBranch>
+          </ListOfWFStepBranch>
+        </WFStep>
+
+        <!-- ──────────────────────────
+             STEP 2: Query Account by Name
+             Siebel Operation / Query sobre
+             el BC Account. Retorna directamente
+             la cantidad de registros encontrados.
+             ────────────────────────── -->
+        <WFStep>
+          <Name>Query Account by Name</Name>
+          <Type>Siebel Operation</Type>
+          <BusObj>Account</BusObj>
+          <BusComp>Account</BusComp>
+          <Operation>Query</Operation>
+          <Seq>1</Seq>
+
+          <ListOfWFStepIOArg>
+
+            <!-- Search Spec: [Name] LIKE '*<Input_Account_Name>*' -->
+            <WFStepIOArg>
+              <Name>Name</Name>
+              <Seq>0</Seq>
+              <Type>Search Specification</Type>
+              <IOArgDataType>String</IOArgDataType>
+              <Expr>"LIKE '*" + [&amp;Input_Account_Name] + "*'"</Expr>
+            </WFStepIOArg>
+
+            <!-- Output: cantidad de registros encontrados -->
+            <WFStepIOArg>
+              <Name>Number of Records</Name>
+              <Seq>1</Seq>
+              <Type>Output</Type>
+              <IOArgDataType>String</IOArgDataType>
+              <Property>Output_Record_Count</Property>
+            </WFStepIOArg>
+
+          </ListOfWFStepIOArg>
+
+          <ListOfWFStepBranch>
+            <WFStepBranch>
+              <Name>Query Account to End</Name>
+              <NextStepName>End</NextStepName>
+              <Seq>0</Seq>
+            </WFStepBranch>
+          </ListOfWFStepBranch>
+
+        </WFStep>
+
+        <!-- ──────────────────────────
+             STEP 3: End
+             ────────────────────────── -->
+        <WFStep>
+          <Name>End</Name>
+          <Type>End</Type>
+          <Seq>2</Seq>
+        </WFStep>
+
+      </ListOfWFStep>
+    </Workflow-Process>
+  </ListOfWorkflow-Function>
+
+</SiebelMessage>
